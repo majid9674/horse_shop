@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Rules\Recaptcha;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -53,7 +54,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'phone_number'=>['required','regex:/^09(1[0-9]|9[0-4]|2[0-2]|0[1-5]|41|3[0,2,3,5-9])\d{7}$/','unique:users,phone_number']
+            'phone_number'=>['required','regex:/^09(1[0-9]|9[0-4]|2[0-2]|0[1-5]|41|3[0,2,3,5-9])\d{7}$/','unique:users,phone_number'],
+            'g-recaptcha-response' => ['required', new Recaptcha]
         ]);
     }
 
