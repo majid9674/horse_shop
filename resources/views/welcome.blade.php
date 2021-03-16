@@ -7,6 +7,7 @@
         <title>Laravel</title>
 
         <!-- Fonts -->
+        <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v27.2.2/dist/font-face.css" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
         <!-- Styles -->
@@ -128,5 +129,7 @@
                 </div>
             </div>
         </div>
+        <script src="{{ asset('js/app.js') }}" ></script>
+        @include('sweet::alert')
     </body>
 </html>

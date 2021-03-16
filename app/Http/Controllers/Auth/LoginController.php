@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Notifications\LoginEmailNotification;
+use App\Notifications\Payment;
 use App\Providers\RouteServiceProvider;
 use App\Rules\Recaptcha;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -39,6 +42,10 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    protected function authenticated(Request $request, $user)
+    {
+        $user->notify(new LoginEmailNotification());
+    }
     protected function validateLogin(Request $request)
     {
         $request->validate([
@@ -46,5 +53,11 @@ class LoginController extends Controller
             'password' => 'required|string',
             'g-recaptcha-response' => ['required', new Recaptcha]
         ]);
+//        $user= $request->user();
+//        $user->notify(new LoginEmailNotification());
+//        $data = User::where('phone_number',$user->phone_number);
+//        $request->session()->flash('phone',$data['phone_number']);
+//
+//        $request->user()->notify(new Payment($request->user()->phone_number));
     }
 }
